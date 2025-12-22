@@ -91,3 +91,33 @@
 - Web ACLs are associated with **AWS resources**, not individual rules or rule sets.
 
 - A single Web ACL can be associated with multiple AWS resources, but each AWS resource can only have **one Web ACL**.
+
+
+
+## WAF Lab Implementation
+
+### Architecture
+EC2 (web server) → ALB → WAF Web ACL → Internet
+
+### Resources Created
+
+| Resource | Name | Purpose |
+|----------|------|---------|
+| VPC | waf-lab-vpc | 10.0.0.0/16 |
+| Subnets | waf-lab-public-1, 2 | Two AZs for ALB |
+| EC2 | waf-lab-web-1 | Apache web server |
+| ALB | waf-lab-alb | Public-facing load balancer |
+| WAF Web ACL | waf-lab-webacl | Attached to ALB |
+
+### WAF Rules Configured
+
+| Rule | Priority | Action | Description |
+|------|----------|--------|-------------|
+| BlockUK | 1 | Block | Blocks requests from GB (geo-match) |
+| RateLimitDDoS | 2 | Block | Blocks IP after 100 requests/5 min |
+
+**Default Action**: Allow (if no rules match)
+
+### Testing Performed
+1. **Geo-blocking**: Accessed ALB from UK → 403 Forbidden
+2. **Rate limiting**: Sent 150 requests via PowerShell → Blocked after 100
