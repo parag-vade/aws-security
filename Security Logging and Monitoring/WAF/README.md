@@ -121,3 +121,35 @@ EC2 (web server) → ALB → WAF Web ACL → Internet
 ### Testing Performed
 1. **Geo-blocking**: Accessed ALB from UK → 403 Forbidden
 2. **Rate limiting**: Sent 150 requests via PowerShell → Blocked after 100
+
+## Test Results
+
+**1. Geo-blocking (BlockUK rule)**
+
+| VPN Location | Result |
+|--------------|--------|
+| US (no VPN) | ✅ 200 OK |
+| Ireland | ✅ 200 OK |
+| India | ✅ 200 OK |
+| UK (London) | ❌ 403 Forbidden |
+
+**2. Rate Limiting (RateLimitDDoS rule)**
+
+| Test Run | Requests | Result |
+|----------|----------|--------|
+| First | 150 | 135 OK, 15 BLOCKED |
+| Second (same IP) | 150 | 0 OK, 150 BLOCKED |
+
+Rate limiting activated after ~100 requests per 5-minute window. Subsequent requests from the same IP were blocked until the window reset.
+
+**3. AWS WAF Console Evidence**
+
+- **Sampled Requests (BlockUK)**: Blocked requests from GB-located IPs
+- **Sampled Requests (RateLimitDDoS)**: 100+ blocked requests from IPs exceeding rate limit
+- **CloudWatch Metrics**: Traffic spikes visible correlating with test times
+
+### Key Learnings
+- WAF rules are evaluated by priority (lower number = higher priority)
+- Rate limiting uses sliding window evaluation, not instant blocking
+- Geo-blocking uses IP geolocation databases to determine country of origin
+- VPN testing effectively demonstrates geo-blocking rules
