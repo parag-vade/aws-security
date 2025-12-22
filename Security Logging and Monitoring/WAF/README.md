@@ -155,25 +155,25 @@ Rate limiting activated after ~100 requests per 5-minute window. Subsequent requ
 - VPN testing effectively demonstrates geo-blocking rules
 
 ### Screenshots
-- VPN connected to Ireland - non-UK location allowed
+- **VPN connected to Ireland - non-UK location allowed**
 <img width="1785" height="918" alt="1" src="https://github.com/user-attachments/assets/3e952b66-ebad-4a61-85cd-83cbbb5c7a81" />
 
-- Successful access (200 OK) from Ireland
+- **Successful access (200 OK) from Ireland**
   <img width="1911" height="1073" alt="2" src="https://github.com/user-attachments/assets/adfcea6b-9c76-4dd2-8ac2-cde50a4cc9d2" />
 
-- VPN connected to UK (London) - blocked country
+- **VPN connected to UK (London) - blocked country**
   <img width="1905" height="1063" alt="4" src="https://github.com/user-attachments/assets/b3fd2652-3976-4977-81b1-7336f4a5c40c" />
 
-- PowerShell rate limit test - first run: 135 OK/15 blocked, second run: 0 OK/150 blocked
+- **PowerShell rate limit test - first run: 135 OK/15 blocked, second run: 0 OK/150 blocked**
   <img width="1900" height="918" alt="5" src="https://github.com/user-attachments/assets/b5ea4094-c04b-41d2-b310-3861849a4084" />
 
-- WAF CloudWatch metrics showing traffic spikes during testing
+- **WAF CloudWatch metrics showing traffic spikes during testing**
   <img width="1490" height="957" alt="6" src="https://github.com/user-attachments/assets/a7697b40-cfd2-4bcb-8d9d-37dbaabf31d6" />
 
-- WAF Sampled Requests - BlockUK rule blocking requests from GB
+- **WAF Sampled Requests - BlockUK rule blocking requests from GB**
   <img width="1423" height="715" alt="7" src="https://github.com/user-attachments/assets/e20cafa8-387e-495d-a21c-58c1307a86e9" />
 
-- WAF Sampled Requests - RateLimitDDoS rule blocking IPs from IN, AU, IE after exceeding threshold
+- **WAF Sampled Requests - RateLimitDDoS rule blocking IPs from IN, AU, IE after exceeding threshold**
   <img width="1420" height="805" alt="8" src="https://github.com/user-attachments/assets/b248eb24-27b6-4f53-b4e1-9f40934ae795" />
 
 
